@@ -263,6 +263,124 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &195065527
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 195065529}
+  - component: {fileID: 195065528}
+  m_Layer: 0
+  m_Name: InputAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &195065528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195065527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d0554a3a0b5cb7646a2448c0f05d9eaf, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 61fe9763-f9a3-41d6-a056-cd10b3553578
+    m_ActionName: Player/Move[/DualSenseGamepadHID/leftStick,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad32132f-aaf5-402e-b0ea-5f5e631437fd
+    m_ActionName: Player/Look[/DualSenseGamepadHID/rightStick,/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3f13d8ff-d730-4324-9db4-b33cf44f8a7e
+    m_ActionName: Player/Fire[/DualSenseGamepadHID/rightTrigger,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 032115f2-d0bc-4d4a-8020-40c5d70cb910
+    m_ActionName: UI/Navigate[/DualSenseGamepadHID/leftStick/up,/DualSenseGamepadHID/rightStick/up,/DualSenseGamepadHID/leftStick/down,/DualSenseGamepadHID/rightStick/down,/DualSenseGamepadHID/leftStick/left,/DualSenseGamepadHID/rightStick/left,/DualSenseGamepadHID/leftStick/right,/DualSenseGamepadHID/rightStick/right,/DualSenseGamepadHID/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 21c636c8-196d-475f-b841-730eb6d18621
+    m_ActionName: UI/Submit[/Keyboard/enter,/DualSenseGamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 444330d0-74dc-4afa-a06b-d75698c00815
+    m_ActionName: UI/Cancel[/Keyboard/escape,/DualSenseGamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 76113833-8831-43ea-84f9-aa7ab4be5b50
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7e4da181-5cb5-42a3-8506-039553daa13d
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aee94c95-d629-4f50-90c0-d033d4b5e8bf
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 65646727-aaf3-4e3d-9715-1d53c0f333b5
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b29aad97-d0f6-4284-b6c6-70befd3ad1a9
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a4fc27e-05f0-41c2-a204-d4c0fb496f1d
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a4ae5e96-2859-45bf-8eaa-98f316c2402b
+    m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b0fba139-2449-42c2-b1cc-a0b0975cecfa
+    m_ActionName: Player/Jump
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!4 &195065529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 195065527}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -14.755025, y: -2.5791404, z: 1.5082524}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &223786145
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -374,12 +492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eafc1eee6cbcfe945ad6a539870a0c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  cCon: {fileID: 0}
-  jumpString: jump2
-  catchString: catch2
-  horizontalString: horizontal2
-  verticalString: vertical2
+  playerCamera: {fileID: 0}
 --- !u!54 &682902667
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -418,7 +531,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1544230092
 AudioListener:
   m_ObjectHideFlags: 0
@@ -478,11 +591,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1544230091}
   m_LocalRotation: {x: 0.095845714, y: -0, z: -0, w: 0.99539626}
-  m_LocalPosition: {x: -0.15419006, y: 1.5038233, z: -2.4306278}
+  m_LocalPosition: {x: 0.16973877, y: 3.28, z: -24.58496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1574377895}
+  m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 11, y: 0, z: 0}
 --- !u!1 &1574377894 stripped
@@ -495,24 +608,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4293905260507518, guid: e3b5a768f0cc0f7489bfdc8133456661, type: 3}
   m_PrefabInstance: {fileID: 223786145}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1574377896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574377894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eafc1eee6cbcfe945ad6a539870a0c99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 1574377899}
-  cCon: {fileID: 0}
-  jumpString: jump1
-  catchString: catch1
-  horizontalString: horizontal1
-  verticalString: vertical1
 --- !u!54 &1574377899
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -527,7 +622,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1001 &1824947715
 PrefabInstance:
@@ -590,6 +685,37 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36dfea047b0b3f943bf972dcbaeaaa3c, type: 3}
+--- !u!1 &1910511403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1910511404}
+  m_Layer: 0
+  m_Name: SkyBoxs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1910511404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1910511403}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -19.496569, y: -14.863116, z: -12.971768}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1951748775 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1655265909893778, guid: fde337a468e20014bafb68143b6a0063, type: 3}
@@ -618,6 +744,10 @@ PrefabInstance:
     - target: {fileID: 1655265909893778, guid: fde337a468e20014bafb68143b6a0063, type: 3}
       propertyPath: m_Name
       value: island_B_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1655265909893778, guid: fde337a468e20014bafb68143b6a0063, type: 3}
+      propertyPath: m_TagString
+      value: Ground
       objectReference: {fileID: 0}
     - target: {fileID: 4309674829727764, guid: fde337a468e20014bafb68143b6a0063, type: 3}
       propertyPath: m_RootOrder
