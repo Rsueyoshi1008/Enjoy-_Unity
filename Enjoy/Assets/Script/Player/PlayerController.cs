@@ -6,15 +6,20 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
-    //[SerializeField] private 
-    //private Animator animator;
     private Rigidbody rb; //物理演算をするコンポーネント
+    [SerializeField] private Animator animator; //アニメーターの所得
     [SerializeField] private Camera playerCamera; //Playerを追従するカメラ
-    float moveSpeed = 500.0f; //Playerの移動速度
+    float moveSpeed = 5.0f; //Playerの移動速度
     float jumpPower = 5.0f; //Playerのジャンプ力
+    public float rotationSpeed; //キャラクタの回転速度
     bool jumpFlag = false; //ジャンプ中かどうかの追跡フラグ
     bool cathFlag = false; //掴み中の追跡フラグ
-
+    private bool isRodHit = false; //回転棒に触れているかの取得
+    //スクリプトが有効になった瞬間に呼び出される
+    void Awake()
+    {
+        
+    }
 	void Start () {
 		//animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
@@ -31,30 +36,23 @@ public class PlayerController : MonoBehaviour
 		// }
         if(Gamepad.current != null) //ゲームパッドが接続されてなかったらゲーム終了
         {
+            //左スティックの入力を見る
             if(Gamepad.current.leftStick.ReadValue() != new Vector2(0.0f,0.0f))
             {
-                var input = Gamepad.current.leftStick.ReadValue();
-
-                Vector3 cameraForward = Vector3.Scale(playerCamera.transform.forward, new Vector3(1, 0, 1)).normalized;// カメラの方向から、X-Z平面の単位ベクトルを取得
-
-                Vector3 velocity = cameraForward * input.x + playerCamera.transform.right * input.y;// 方向キーの入力値とカメラの向きから、移動方向を決定
-
-                velocity = velocity.normalized;//移動ベクトルを正規化する
-
-                //float speed = runFlag ? _model.RunSpeed : _model.WalkSpeed;//  走った場合と歩いた場合
-
-                rb.velocity = new Vector3(velocity.x * moveSpeed, rb.velocity.y, velocity.z * moveSpeed);// 移動方向にスピードを掛ける。ジャンプや落下がある場合は、別途Y軸方向の速度ベクトルを足す。
-
-                //Debug.Log("Velocity" + rb.velocity);
-
-
-            } 
+                animator.SetFloat("Movement",1);
+                
+            }
+            else
+            {
+                animator.SetFloat("Movement",-1);
+            }
             if(jumpFlag == false)
             {
                 if(Gamepad.current.buttonSouth.wasPressedThisFrame) //Xボタンの条件分岐
                 {
                     rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
                     jumpFlag = true; // ジャンプ中のフラグを立てる
+                    animator.SetBool("isJump",jumpFlag);
                 }
             }
             
@@ -63,10 +61,11 @@ public class PlayerController : MonoBehaviour
                 cathFlag = true;
                 
             }
-            Debug.Log(cathFlag);
+            //Debug.Log(Gamepad.current.leftStick.ReadValue());
         }
         else
         {
+            Debug.Log("コントローラーが接続されていません！");
             #if UNITY_EDITOR //UnityEditorでプレイしているとき
                 UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
 
@@ -82,11 +81,57 @@ public class PlayerController : MonoBehaviour
         // 入力方向に回転する
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed);
 	}
-    void OnCollisionEnter(Collision collision)
+    void FixedUpdate()
+    {
+        if(Gamepad.current.leftStick.ReadValue() != new Vector2(0.0f,0.0f))
+        {
+            if(isRodHit == false) //回転棒に当たったら移動を無効
+            {
+                Move();
+            }
+            
+        }
+        
+    }
+
+    public void Move()
+    {
+        var input = Gamepad.current.leftStick.ReadValue();
+                
+        // カメラの方向から、X-Z平面の単位ベクトルを取得
+        Vector3 cameraForward = playerCamera.transform.forward;
+        Vector3 cameraRight = playerCamera.transform.right;
+
+        // Y軸成分を無視する
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        //方向キーの入力値とカメラの向きから、移動方向を決定
+        Vector3 velocity = cameraForward.normalized * input.y + cameraRight.normalized * input.x;
+        
+        //  走った場合と歩いた場合
+        //float speed = runFlag ? _model.RunSpeed : _model.WalkSpeed
+        rb.velocity = velocity * moveSpeed + new Vector3(0, rb.velocity.y, 0);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed * Time.deltaTime);
+    }
+    void OnCollisionEnter(Collision collision) //触れたときの処理
     {
         if (collision.gameObject.CompareTag("Ground")) // 地面に接触したら
         {
             jumpFlag = false; // ジャンプ中のフラグをリセットする
+            animator.SetBool("isJump",jumpFlag);
+        }
+        if(collision.gameObject.CompareTag("Rod"))
+        {
+            isRodHit = true;
+        }
+    }
+    void OnCollisionExit(Collision collision) //離れたときの処理
+    {
+        if(collision.gameObject.CompareTag("Rod"))
+        {
+            isRodHit = false;
         }
     }
     

@@ -266,10 +266,10 @@
                 {
                     "name": "",
                     "id": "385f57e4-6573-4b94-a7bf-072d1291f748",
-                    "path": "<Joystick>/trigger",
+                    "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Joystick",
+                    "groups": "Gamepad",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
