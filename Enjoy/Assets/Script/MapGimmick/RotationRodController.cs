@@ -37,7 +37,7 @@ public class RotationRodController : MonoBehaviour
     // 他のオブジェクトと衝突した時に呼び出される関数
     void OnCollisionEnter(Collision collision)
     {
-        // // 衝突したオブジェクトが"Player"タグを持っている場合
+        // 衝突したオブジェクトが"Player"タグを持っている場合
         // if (collision.gameObject.CompareTag("Player"))
         // {
         //     Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
@@ -50,7 +50,7 @@ public class RotationRodController : MonoBehaviour
         //         forceDirection = -forceDirection.normalized;
 
         //         // 反力を加える（Impulseモードで）
-        //         rb.AddForce(forceDirection * forceAmount, ForceMode.Impulse);
+        //         rb.AddForce(100f,100f,100f);
         //     }
         // }
     }

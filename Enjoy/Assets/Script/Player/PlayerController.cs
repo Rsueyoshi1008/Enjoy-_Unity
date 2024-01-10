@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 		//animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         
+        
 	}
 
 	void Update () {
@@ -75,8 +76,14 @@ public class PlayerController : MonoBehaviour
                 #endif
         }
         
-        
-        
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            rb.AddForce(1000f,0f,1000f);
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))    //Escキーを押したときにゲームを終了する。
+        {
+            UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+        }
         //Debug.Log(rb.velocity);
         // 入力方向に回転する
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed);
@@ -87,10 +94,11 @@ public class PlayerController : MonoBehaviour
         {
             if(isRodHit == false) //回転棒に当たったら移動を無効
             {
-                Move();
+                
             }
-            
+            Move();
         }
+        
         
     }
 
@@ -111,6 +119,7 @@ public class PlayerController : MonoBehaviour
         
         //  走った場合と歩いた場合
         //float speed = runFlag ? _model.RunSpeed : _model.WalkSpeed
+
         rb.velocity = velocity * moveSpeed + new Vector3(0, rb.velocity.y, 0);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed * Time.deltaTime);
@@ -131,7 +140,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Rod"))
         {
-            isRodHit = false;
+            //isRodHit = false;
         }
     }
     
