@@ -15,10 +15,12 @@ public class PlayerController : MonoBehaviour
     bool jumpFlag = false; //ジャンプ中かどうかの追跡フラグ
     bool cathFlag = false; //掴み中の追跡フラグ
     private bool isRodHit = false; //回転棒に触れているかの取得
+    float statePositionY; //開始時のPlayerのYの値
+    public float forceMagnitude; //棒にあった時に外側に押し出す力
     //スクリプトが有効になった瞬間に呼び出される
     void Awake()
     {
-        
+        statePositionY = transform.position.y;
     }
 	void Start () {
 		//animator = GetComponent<Animator>();
@@ -78,7 +80,7 @@ public class PlayerController : MonoBehaviour
         
         if(Input.GetKeyDown(KeyCode.A))
         {
-            rb.AddForce(1000f,0f,1000f);
+            rb.AddForce(1000f,100f,1000f);
         }
         if(Input.GetKeyDown(KeyCode.Escape))    //Escキーを押したときにゲームを終了する。
         {
@@ -88,6 +90,19 @@ public class PlayerController : MonoBehaviour
         // 入力方向に回転する
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed);
 	}
+    void LateUpdate()   //Updateの後に実行される
+    {
+        //地面にめり込まないようにする為の処理
+        float positionY = transform.position.y; //
+        Vector3 pos = transform.position; //
+        if(positionY <= 0.0f)
+        {
+            pos.y = statePositionY;
+            transform.position = pos;
+        }
+        Debug.Log(transform.position.y);
+    }
+
     void FixedUpdate()
     {
         if(Gamepad.current.leftStick.ReadValue() != new Vector2(0.0f,0.0f))
@@ -135,6 +150,8 @@ public class PlayerController : MonoBehaviour
         {
             isRodHit = true;
         }
+        
+        
     }
     void OnCollisionExit(Collision collision) //離れたときの処理
     {
@@ -143,6 +160,22 @@ public class PlayerController : MonoBehaviour
             //isRodHit = false;
         }
     }
-    
+    void OnCollisionStay(Collision collision) //当たっている間
+    {
+        if(collision.gameObject.CompareTag("HitByRod"))
+        {
+            Debug.Log("HitRod");
+
+            //ステージの外側にAddForceする
+            // 棒に当たったら、ステージの外に飛ばす
+            Vector3 currentPosition = transform.position;
+            
+            // ステージ境界までの距離を加味して外に飛ばす方向を計算
+            Vector3 forceDirection = (currentPosition - Vector3.zero).normalized;
+
+            // 力を加えて吹っ飛ばす
+            rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+        }
+    }
 }
 
