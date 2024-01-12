@@ -4,23 +4,35 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb; //物理演算をするコンポーネント
+    [SerializeField] private Text textGameCount; //時間制限の表示
+    [SerializeField] private Text textGameCountNow; //時間経過の表示
     [SerializeField] private Animator animator; //アニメーターの所得
     [SerializeField] private Camera playerCamera; //Playerを追従するカメラ
     float moveSpeed = 5.0f; //Playerの移動速度
     float jumpPower = 5.0f; //Playerのジャンプ力
     public float rotationSpeed; //キャラクタの回転速度
     bool jumpFlag = false; //ジャンプ中かどうかの追跡フラグ
+    bool onGround = false; //地面に触れているかどうか
     bool cathFlag = false; //掴み中の追跡フラグ
     private bool isRodHit = false; //回転棒に触れているかの取得
+    private bool isBigRodHit = false; //大きな回転棒に当たっているか取得
     float statePositionY; //開始時のPlayerのYの値
     public float forceMagnitude; //棒にあった時に外側に押し出す力
+    float gameCount = 0.0f; //進めるカウント
+    public float endCount; //終了カウント
     //スクリプトが有効になった瞬間に呼び出される
     void Awake()
     {
         statePositionY = transform.position.y;
+        if(endCount == null)
+        {
+            Debug.Log("時間制限が設けられていません");
+            UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
+        }
     }
 	void Start () {
 		//animator = GetComponent<Animator>();
@@ -32,11 +44,14 @@ public class PlayerController : MonoBehaviour
 	void Update () {
         //フラグ・変数の初期化
         cathFlag = false;
-
-		//　キャラクターコライダが接地、またはレイが地面に到達している場合
-		// if(cCon.isGrounded) {
-            
-		// }
+		gameCount += Time.deltaTime;
+        int count = (int)gameCount;
+        textGameCount.text = count.ToString();
+        textGameCountNow.text = "終了時間 " + endCount.ToString();
+        if(gameCount > endCount)
+        {
+            ClearGame();
+        }
         if(Gamepad.current != null) //ゲームパッドが接続されてなかったらゲーム終了
         {
             //左スティックの入力を見る
@@ -78,40 +93,44 @@ public class PlayerController : MonoBehaviour
                 #endif
         }
         
-        if(Input.GetKeyDown(KeyCode.A))
+        /** ゲーム終了処理 **/
+        if(transform.position.y <= -2.0f)
         {
-            rb.AddForce(1000f,100f,1000f);
+            SceneManager.LoadScene("GameOverScene");
         }
         if(Input.GetKeyDown(KeyCode.Escape))    //Escキーを押したときにゲームを終了する。
         {
             UnityEditor.EditorApplication.isPlaying = false;//ゲームプレイ終了
         }
-        //Debug.Log(rb.velocity);
-        // 入力方向に回転する
-        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed);
+        
 	}
-    void LateUpdate()   //Updateの後に実行される
+    void LateUpdate() //Updateの後に実行される
     {
         //地面にめり込まないようにする為の処理
-        float positionY = transform.position.y; //
-        Vector3 pos = transform.position; //
-        if(positionY <= 0.0f)
+        Vector3 pos = transform.position;
+        if(onGround == true)
         {
-            pos.y = statePositionY;
-            transform.position = pos;
-        }
-        Debug.Log(transform.position.y);
+            if(transform.position.y <= 0.0f)
+            {
+                pos.y = statePositionY;
+                transform.position = pos;
+            }
+        } 
     }
 
     void FixedUpdate()
     {
         if(Gamepad.current.leftStick.ReadValue() != new Vector2(0.0f,0.0f))
         {
-            if(isRodHit == false) //回転棒に当たったら移動を無効
+            if(isBigRodHit == false) //巨大回転棒に当たっていない
             {
                 
             }
-            Move();
+            if(onGround == true)
+            {
+                Move();
+            }
+            
         }
         
         
@@ -139,16 +158,26 @@ public class PlayerController : MonoBehaviour
 
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(velocity), rotationSpeed * Time.deltaTime);
     }
+
+    void ClearGame()
+    {
+        SceneManager.LoadScene("ClearScene");
+    }
     void OnCollisionEnter(Collision collision) //触れたときの処理
     {
         if (collision.gameObject.CompareTag("Ground")) // 地面に接触したら
         {
             jumpFlag = false; // ジャンプ中のフラグをリセットする
+            onGround = true; //触れたらフラグセット
             animator.SetBool("isJump",jumpFlag);
         }
         if(collision.gameObject.CompareTag("Rod"))
         {
             isRodHit = true;
+        }
+        if(collision.gameObject.CompareTag("HitByBigRod"))
+        {
+            isBigRodHit = true;
         }
         
         
@@ -159,12 +188,20 @@ public class PlayerController : MonoBehaviour
         {
             //isRodHit = false;
         }
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            onGround = false; //離れたときにリセット
+        }
+        if(collision.gameObject.CompareTag("HitByBigRod"))
+        {
+            isBigRodHit = false; //離れたときにリセット
+        }
     }
     void OnCollisionStay(Collision collision) //当たっている間
     {
         if(collision.gameObject.CompareTag("HitByRod"))
         {
-            Debug.Log("HitRod");
+            
 
             //ステージの外側にAddForceする
             // 棒に当たったら、ステージの外に飛ばす
